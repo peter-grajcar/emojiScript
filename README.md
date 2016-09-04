@@ -7,9 +7,7 @@ Here is a simple example of emojiScript code:
 	🏃
 		🏃
 			😄 👉 2❤️
-			🖨(😄)❤️
-			🖨(😄)❤️
-			🖨(😄)❤️
+			✏️(😄)❤️
 		🔚❤️
 	🔚🏁
 

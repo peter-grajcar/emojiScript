@@ -35,7 +35,7 @@ var Lexer = function (code) {
 	this.keywords = {
 		"🏃": new Token(this.def.BEGIN, "🏃"),
 		"🔚": new Token(this.def.END, "🔚"),
-		"🖨": new Token(this.def.WRITE, "🖨")
+		"✏️": new Token(this.def.WRITE, "✏️")
 	}
 	
 	this.error = function (msg) {
