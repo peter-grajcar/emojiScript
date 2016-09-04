@@ -59,14 +59,39 @@ Assignment of values to variables is done by operator 👉
 
 ##### 2.3.1 Number
 
-Numbers represents number with floating point and supports 4 basic operators: ✖️, ➕, ➖, ➗
+Numbers represents number with floating point and supports 4 basic operators: ✖️, ➕, ➖, ➗, 🏇, ◀️, ▶️
 
 	😄 👉 4❤️
 	😂 👉 10.85❤️
 	
 ##### 2.3.2 String
 
-String may containt any character except 💬	and support ➕ operator
+String may contain any character except 💬	and support ➕, 🏇, ◀️, ▶️ operators
 
 	😄 👉 💬👋🌍💬❤️
 	😂 👉 💬👋💬 ➕ 💬🌍💬❤️
+	
+##### 2.3.3 Boolean
+
+Boolean data type support 🏇, ◀️, ▶️ operators
+
+	😄 👉 true❤️
+	😂 👉 false❤️
+	
+### 3. Operators
+
+|	Operator	|	Description	|
+| :-----------: | :-----------: |
+|	🏇			|	Equals		|
+| :-----------: | :-----------: |
+|	▶️			|	More Than	|
+| :-----------: | :-----------: |
+|	◀️			|	Less Than	|
+| :-----------: | :-----------: |
+|	➕			|	Plus		|
+| :-----------: | :-----------: |
+|	➖			|	Minus		|
+| :-----------: | :-----------: |
+|	✖️			|	Multiply	|
+| :-----------: | :-----------: |
+|	➗			|	Divide		|
