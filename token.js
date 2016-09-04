@@ -1,3 +1,4 @@
+//Token data structure
 var Token = function (type, val) {
 	this.val = val;
 	this.type = type;

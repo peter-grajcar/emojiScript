@@ -3,7 +3,10 @@ var Lexer = function (code) {
 	this.pos = 0;
 	this.currentChar = this.code.charAt(this.pos);
 	
+	//Characters to be ignored
 	var ignore = [" ", "\t", "\n"];
+	
+	//Token type definitions
 	this.def = {
 		EOF: "EOF",
 		
@@ -31,6 +34,7 @@ var Lexer = function (code) {
 		PROGRAM: "PROGRAM",
 		WHILE: "WHILE"
 	}
+	//Registered characters
 	this.op = {
 		PLUS: "➕",
 		MINUS: "➖",
@@ -46,6 +50,7 @@ var Lexer = function (code) {
 		LESS: "◀️",
 		MORE: "▶️",
 	}
+	//Registered keywords
 	this.keywords = {
 		"🏃": new Token(this.def.BEGIN, "🏃"),
 		"🔚": new Token(this.def.END, "🔚"),
@@ -60,6 +65,7 @@ var Lexer = function (code) {
 		document.getElementById("error").innerHTML += ("Parse Error: " + msg + " near '" + this.code.substring(this.pos-2,this.pos+10) + "'<br>");
 	}
 	
+	//returns next character
 	this.nextChar = function () {
 		this.pos++;
 		if(this.pos > this.code.length -1)
@@ -67,6 +73,7 @@ var Lexer = function (code) {
 		else
 			this.currentChar = this.code.charAt(this.pos);
 	}
+	//returns character after next
 	this.furtherChar = function () {
 		var furtherPos = this.pos+1;
 		if(furtherPos > this.code.length -1)
@@ -74,6 +81,7 @@ var Lexer = function (code) {
 		else
 			return this.code.charAt(furtherPos);
 	}
+	//Skips all characters specified in 'ignore' array
 	this.whiteSpace = function () {
 		do{
 			var ws = false;
@@ -85,8 +93,10 @@ var Lexer = function (code) {
 			}
 		}while(ws)
 	}
+	//returns next token
 	this.nextToken = function () {
 		while(this.currentChar != null){
+			//skip
 			this.whiteSpace();		
 				
 			if(this.currentChar == this.op.ASSIGN.charAt(0) && this.furtherChar() == this.op.ASSIGN.charAt(1)){
@@ -153,6 +163,7 @@ var Lexer = function (code) {
 		}
 		return new Token(this.def.EOF, null);
 	}
+	//handles number data type
 	this.num = function () {
 		var result = "";
 		var f = false;
@@ -164,6 +175,7 @@ var Lexer = function (code) {
 		}
 		return new Token(this.def.NUMBER, parseFloat(result));
 	}
+	//handles string data type
 	this.string = function () {
 		var result = "";
 		while(!(this.currentChar == this.op.STRING.charAt(0) && this.furtherChar() == this.op.STRING.charAt(1))){
@@ -173,12 +185,15 @@ var Lexer = function (code) {
 		this.nextChar();this.nextChar();
 		return new Token(this.def.STRING, result);
 	}
+	//handles identifiers
 	this.id = function () {
 		var result = "";
 		while(isID(this.currentChar) && !isOp(this.currentChar, this.furtherChar(), this)){
 			result += this.currentChar;
 			this.nextChar();
 			
+			//if identifier is registered as keyword
+			//return registered token
 			if(typeof this.keywords[result] !== "undefined")
 				return this.keywords[result];
 		}

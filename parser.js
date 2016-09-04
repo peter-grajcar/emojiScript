@@ -5,6 +5,9 @@ var Parser = function (lexer) {
 		
 	}
 	
+	//Checks if expected type matches current token's.
+	//if does, pass next token
+	//else throw error.
 	this.expect = function (type){
 		if(this.currentToken.type == type)
 			this.currentToken = this.lexer.nextToken();
@@ -12,6 +15,7 @@ var Parser = function (lexer) {
 			this.lexer.error("Unexpected " + this.currentToken + " Expected " + this.lexer.def[type]);
 	}
 	
+	//Priority level 3 operators
 	this.factor = function () {
 		var token = this.currentToken;
 		if(token.type == this.lexer.def.PLUS){
@@ -41,6 +45,7 @@ var Parser = function (lexer) {
 			return this.GLOBAL_SCOPE[this.variable()];
 		}
 	}
+	//Priority level 2 operators
 	this.term = function () {
 		var left = this.factor();
 		
@@ -56,6 +61,7 @@ var Parser = function (lexer) {
 		
 		return left;
 	}
+	//Priority level 1 operators
 	this.sum = function () {
 		var left = this.term();
 		
@@ -71,6 +77,7 @@ var Parser = function (lexer) {
 		
 		return left;
 	}
+	//Priority level 0 operators
 	this.expr = function () {
 		var left = this.sum();
 		
@@ -87,6 +94,7 @@ var Parser = function (lexer) {
 		}
 		return left;
 	}
+	//Defines program structure syntax
 	this.program = function () {
 		this.expect(this.lexer.def.PROGRAM);
 		var cs = this.compoundStatement();
@@ -94,6 +102,7 @@ var Parser = function (lexer) {
 		this.expect(this.lexer.def.DOT);
 		return cs;
 	}
+	//Code Blocks
 	this.compoundStatement = function () {
 		this.expect(this.lexer.def.BEGIN);
 		
@@ -107,6 +116,7 @@ var Parser = function (lexer) {
 		this.expect(this.lexer.def.END);
 		return compound;
 	}
+	//Separates code by semicolons
 	this.statementList = function () {
 		var stmt = this.statement();
 		var result = [stmt];
@@ -122,6 +132,7 @@ var Parser = function (lexer) {
 	this.statement = function () {
 		if(this.currentToken.type == this.lexer.def.BEGIN)
 			return this.compoundStatement();
+		//While loop
 		if(this.currentToken.type == this.lexer.def.WHILE){
 			var pos = this.lexer.pos-this.currentToken.val.length-1;
 			
@@ -130,6 +141,7 @@ var Parser = function (lexer) {
 			var condition = this.expr();
 			var compound = null;
 			
+			//if condition fails skip all tokens until END
 			if(condition == false){
 				while(this.currentToken.type != this.lexer.def.END){
 					this.currentToken = this.lexer.nextToken();
@@ -137,6 +149,7 @@ var Parser = function (lexer) {
 				this.expect(this.lexer.def.END);
 			}else{
 				compound = this.compoundStatement();
+				//return to while beggining
 				this.lexer.pos = pos;
 			}
 			
