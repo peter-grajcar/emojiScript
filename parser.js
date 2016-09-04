@@ -34,6 +34,9 @@ var Parser = function (lexer) {
 		}else if(token.type == this.lexer.def.STRING){
 			this.expect(this.lexer.def.STRING);
 			return token.val;
+		}else if(token.type == this.lexer.def.BOOL){
+			this.expect(this.lexer.def.BOOL);
+			return token.val;
 		}else{
 			return this.GLOBAL_SCOPE[this.variable()];
 		}
@@ -53,7 +56,7 @@ var Parser = function (lexer) {
 		
 		return left;
 	}
-	this.expr = function () {
+	this.sum = function () {
 		var left = this.term();
 		
 		while(this.currentToken.type == this.lexer.def.PLUS || this.currentToken.type == this.lexer.def.MINUS){
@@ -66,6 +69,22 @@ var Parser = function (lexer) {
 			left = this.binOp( left, operator, this.term() );  
 		}
 		
+		return left;
+	}
+	this.expr = function () {
+		var left = this.sum();
+		
+		while(this.currentToken.type == this.lexer.def.EQ || this.currentToken.type == this.lexer.def.MORE || this.currentToken.type == this.lexer.def.LESS){
+			var operator = this.currentToken;
+			if(this.currentToken.type == this.lexer.def.EQ)
+				this.expect(this.lexer.def.EQ);
+			if(this.currentToken.type == this.lexer.def.MORE)
+				this.expect(this.lexer.def.MORE);
+			if(this.currentToken.type == this.lexer.def.LESS)
+				this.expect(this.lexer.def.LESS);
+			
+			left = this.binOp( left, operator, this.sum() );  
+		}
 		return left;
 	}
 	this.program = function () {
@@ -90,45 +109,82 @@ var Parser = function (lexer) {
 	}
 	this.statementList = function () {
 		var stmt = this.statement();
-		var result = [];
+		var result = [stmt];
 		
 		while(this.currentToken.type == this.lexer.def.SEMI){
 			this.expect(this.lexer.def.SEMI);
 			result[result.length] = this.statement();
 		}
-		
+	
 		return result;
 	}
+	this.counter = 0;
 	this.statement = function () {
 		if(this.currentToken.type == this.lexer.def.BEGIN)
 			return this.compoundStatement();
+		if(this.currentToken.type == this.lexer.def.WHILE){
+			var pos = this.lexer.pos-this.currentToken.val.length-1;
+			/*
+				🔝
+					🏃
+						😊 👉 2❤️
+						🔁 😊 
+						🏃
+							😊👉😊➕😊❤️
+							✏️(😊)❤️
+						🔚❤️
+					🔚
+				🔚🏁
+			*/
+			
+			this.expect(this.lexer.def.WHILE);
+			
+			var condition = this.expr();
+			var compound = null;
+			
+			if(condition >= 100){
+				while(this.currentToken.type != this.lexer.def.END){
+					this.currentToken = this.lexer.nextToken();
+				}
+				this.expect(this.lexer.def.END);
+			}else{
+				compound = this.compoundStatement();
+			
+				this.lexer.pos = pos;
+			}
+			
+			return compound;
+		}
 		if(this.currentToken.type == this.lexer.def.WRITE){
 			this.expect(this.lexer.def.WRITE);
 			this.expect(this.lexer.def.LPAR);
 			var x = this.expr();
 			this.expect(this.lexer.def.RPAR);
 			document.getElementById("output").innerHTML += ("> <font color='blue'>" + x + "</font><br>");
-			return this.empty();
+			return this.emptyStatement();
 		}
-		else if(this.currentToken.type == this.lexer.def.ID)
+		else if(this.currentToken.type == this.lexer.def.ID){
 			return this.assignmentStatement();
+		}
 		else
-			return this.empty();
+			return this.emptyStatement();
 	}
 	this.assignmentStatement = function () {
+		var pos = this.lexer.pos;
 		var left = this.variable();
 		var token = this.currentToken;
 		this.expect(this.lexer.def.ASSIGN);
 		var right = this.expr();
 		var result = this.binOp(left, token, right);
+		return pos;
 	}
 	this.variable = function () {
 		var result = this.currentToken;
 		this.expect(this.lexer.def.ID);
 		return result.val;
 	}
-	this.empty = function () {
-		
+	this.emptyStatement = function () {
+		return this.lexer.pos;
 	}
 	
 	
@@ -145,6 +201,18 @@ var Parser = function (lexer) {
 				break;
 			case this.lexer.def.DIV: 
 				return left/right;
+				break;
+			case this.lexer.def.EQ: 
+				return left == right;
+				break;
+			case this.lexer.def.EQ: 
+				return left == right;
+				break;
+			case this.lexer.def.LESS: 
+				return left < right;
+				break;
+			case this.lexer.def.MORE: 
+				return left > right;
 				break;
 			case this.lexer.def.ASSIGN:
 				this.GLOBAL_SCOPE[left] = right;

@@ -11,7 +11,7 @@ Because one picture is worth a thousand words.
 		🔚
 	🔚🏁
 	
-Ouput:
+Output:
 
 	👋🌍
 

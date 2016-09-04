@@ -6,14 +6,21 @@ var Lexer = function (code) {
 	var ignore = [" ", "\t", "\n"];
 	this.def = {
 		EOF: "EOF",
+		
 		NUM: "NUMBER",
 		STRING: "STRING",
+		BOOL: "BOOLEAN",
+		
 		PLUS: "PLUS",
 		MINUS: "MINUS",
 		MUL: "MULTIPLY",
 		DIV: "DIVIDE",
 		LPAR: "LEFT PARENTHESIS",
 		RPAR: "RIGHT PARENTHESIS",
+		EQ: "EQUALS",
+		LESS: "LESS THAN",
+		MORE: "MORE THAN",
+		
 		BEGIN: "BEGIN",
 		END: "END",
 		DOT: "DOT",
@@ -21,7 +28,8 @@ var Lexer = function (code) {
 		ASSIGN: "ASSIGN",
 		SEMI: "SEMICOLON",
 		WRITE: "WRITE",
-		PROGRAM: "PROGRAM"
+		PROGRAM: "PROGRAM",
+		WHILE: "WHILE"
 	}
 	this.op = {
 		PLUS: "➕",
@@ -33,13 +41,19 @@ var Lexer = function (code) {
 		ASSIGN: "👉",
 		SEMI: "❤️",
 		DOT: "🏁",
-		STRING: "💬"
+		STRING: "💬",
+		EQ: "🏇",
+		LESS: "◀️",
+		MORE: "▶️",
 	}
 	this.keywords = {
 		"🏃": new Token(this.def.BEGIN, "🏃"),
 		"🔚": new Token(this.def.END, "🔚"),
 		"✏️": new Token(this.def.WRITE, "✏️"),
-		"🔝": new Token(this.def.PROGRAM, "🔝")
+		"🔝": new Token(this.def.PROGRAM, "🔝"),
+		"🔁": new Token(this.def.WHILE, "🔁"),
+		"true": new Token(this.def.BOOL, true),
+		"false": new Token(this.def.BOOL, false)
 	}
 	
 	this.error = function (msg) {
@@ -115,6 +129,18 @@ var Lexer = function (code) {
 			if(this.currentChar == this.op.RPAR){
 				this.nextChar();
 				return new Token(this.def.RPAR, this.op.RPAR);
+			}
+			if(this.currentChar == this.op.EQ.charAt(0) && this.furtherChar() == this.op.EQ.charAt(1)){
+				this.nextChar();this.nextChar();
+				return new Token(this.def.EQ, this.op.EQ);
+			}
+			if(this.currentChar == this.op.LESS.charAt(0) && this.furtherChar() == this.op.LESS.charAt(1)){
+				this.nextChar();this.nextChar();
+				return new Token(this.def.LESS, this.op.LESS);
+			}
+			if(this.currentChar == this.op.MORE.charAt(0) && this.furtherChar() == this.op.MORE.charAt(1)){
+				this.nextChar();this.nextChar();
+				return new Token(this.def.MORE, this.op.MORE);
 			}
 			
 			if(isAlpha(this.currentChar))
