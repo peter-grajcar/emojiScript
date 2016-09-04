@@ -1,29 +1,38 @@
 # emojiScript
 
-emojiScript is programming language based on emojis. The interpreter of emojiScript is written in javaScript.
+emojiScript is interpreted programming language based on emojis. The interpreter of emojiScript is written in javaScript.
+Because one picture is worth a thousand words.
 
-Here is a simple example of emojiScript code:
+## Hello World
 
-	🏃
+	🔝
 		🏃
-			😄 👉 2✖5❤️
-			✏️(😄)❤️
-		🔚❤️
+			✏️(💬👋🌍💬)❤️
+		🔚
 	🔚🏁
 	
 Ouput:
 
-	10
+	👋🌍
 
 
 
-Every program starts with 🏃 and ends with 🔚🏁 similarly to Pascal's `BEGIN` and `END.`.
+## Documentation
 
+### 1. Basics
 
-Variable value assignment in emojiScript is done by 'hand' like this `{variable}` 👉 `{value}`.
+Every emojiScript program must start with keyword 🔝 followed by main block of code and end with keyword 🔚 followed by 🏁.
 
+	🔝
+		{main block of code}
+	🔚🏁
 
-In emojiScript instead of semicolons, we use hearts ❤️❤️❤️❤️
+Block of code have following syntax:
 
+	🏃
+		{code}
+	🔚
+	
+### 2. Variables
 
-And surprisingly writing of output is done by 'pencil': ✏️`({expression to write})`
+emojiScript is weakly typed language and there is no need to explicitly define data types of variables.

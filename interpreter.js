@@ -3,5 +3,6 @@ var Interpreter = function (parser) {
 	
 	this.parse = function () {
 		this.parser.program();
+		//console.log(this.parser.GLOBAL_SCOPE);
 	}
 }

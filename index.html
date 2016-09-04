@@ -4,11 +4,14 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<style>
+			*:focus { outline: none; }
 			body { font-size: 2em; font-family: arial; }
 			button { font-size: 1em; }
 			textarea { font-size: 0.75em; overflow:scroll; white-space: nowrap; resize: vertical; }
 			#output { min-height: 3em; border: 1px solid black; overflow-x: scroll; overflow-y: visible; white-space: nowrap; font-size: 0.75em; margin-bottom: 2em; }
 			#error { min-height: 3em; border: 1px solid black; overflow-x: scroll; overflow-y: visible; white-space: nowrap; font-size: 0.75em; color: red; }
+			#keyboard { border: 1px solid black; margin-bottom: 1em; text-align: center; }
+			#keyboard button { border: 1px solid black; background: none; margin: 0.5em;}
 		</style>
 		<script src="interpreter.js"></script>
 		<script src="parser.js"></script>
@@ -17,13 +20,22 @@
 		<script src="utils.js"></script>
 	</head>
 	<body>
-		<textarea style="width: 100%" rows="10" id="code">
-🏃
-	🏃
-		😄 👉 2❤️
-		✏️(😄)❤️
-	🔚❤️
-🔚🏁</textarea>
+		<textarea style="width: 100%" rows="10" id="code">🔝&#10;	🏃&#10;		😄 👉 2❤️&#10;		✏️(😄)❤️&#10;	🔚&#10;🔚🏁</textarea>
+		<div id="keyboard">
+			<button class="key" value="🔝">🔝</button>
+			<button class="key" value="🏃">🏃</button>
+			<button class="key" value="👉">👉</button>
+			<button class="key" value="✏️">✏️</button>
+			<button class="key" value="🏁">🏁</button>
+			<button class="key" value="❤️">❤️</button>
+			<button class="key" value="✖️">✖️</button>
+			<button class="key" value="➕">➕</button>
+			<button class="key" value="➖">➖</button>
+			<button class="key" value="➗">➗</button>
+			<button class="key" value="💬">💬</button>
+			<button class="key" value="😊">😊</button>
+			<button class="key" value="😂">😂</button>
+		</div>
 		<button id="run">Run</button><br><br>
 		Output
 		<div id="output"></div>
@@ -45,6 +57,19 @@
 					var start = this.selectionStart;
 					this.value = this.value.substring(0,start) + "\t" + this.value.substring(this.selectionEnd);
 					this.selectionEnd = start+1;
+				}
+			}
+			
+			var elements = document.getElementsByClassName("key");
+			for(var i = 0; i < elements.length; i++){
+				var element = elements[i];
+				element.onclick = function () {
+					console.log("A");
+					var textarea = document.getElementById("code");
+					var start = textarea.selectionStart;
+					textarea.value = textarea.value.substring(0,start) + this.value + textarea.value.substring(textarea.selectionEnd);
+					textarea.selectionEnd = start+this.value.length;
+					textarea.focus();
 				}
 			}
 		

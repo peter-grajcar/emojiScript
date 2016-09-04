@@ -6,7 +6,8 @@ var Lexer = function (code) {
 	var ignore = [" ", "\t", "\n"];
 	this.def = {
 		EOF: "EOF",
-		INT: "INTEGER",
+		NUM: "NUMBER",
+		STRING: "STRING",
 		PLUS: "PLUS",
 		MINUS: "MINUS",
 		MUL: "MULTIPLY",
@@ -19,23 +20,26 @@ var Lexer = function (code) {
 		ID: "IDENTIFIER",
 		ASSIGN: "ASSIGN",
 		SEMI: "SEMICOLON",
-		WRITE: "WRITE"
+		WRITE: "WRITE",
+		PROGRAM: "PROGRAM"
 	}
 	this.op = {
 		PLUS: "➕",
 		MINUS: "➖",
-		MUL: "✖",
+		MUL: "✖️",
 		DIV: "➗",
 		LPAR: "(",
 		RPAR: ")",
 		ASSIGN: "👉",
 		SEMI: "❤️",
-		DOT: "🏁"
+		DOT: "🏁",
+		STRING: "💬"
 	}
 	this.keywords = {
 		"🏃": new Token(this.def.BEGIN, "🏃"),
 		"🔚": new Token(this.def.END, "🔚"),
-		"✏️": new Token(this.def.WRITE, "✏️")
+		"✏️": new Token(this.def.WRITE, "✏️"),
+		"🔝": new Token(this.def.PROGRAM, "🔝")
 	}
 	
 	this.error = function (msg) {
@@ -83,6 +87,10 @@ var Lexer = function (code) {
 				this.nextChar();this.nextChar();
 				return new Token(this.def.SEMI, this.op.SEMI);
 			}
+			if(this.currentChar == this.op.STRING.charAt(0) && this.furtherChar() == this.op.STRING.charAt(1)){
+				this.nextChar();this.nextChar();
+				return this.string();
+			}
 			
 			if(this.currentChar == this.op.PLUS.charAt(0)){
 				this.nextChar();
@@ -92,8 +100,8 @@ var Lexer = function (code) {
 				this.nextChar();
 				return new Token(this.def.MINUS, this.op.MINUS);
 			}
-			if(this.currentChar == this.op.MUL.charAt(0)){
-				this.nextChar();
+			if(this.currentChar == this.op.MUL.charAt(0) && this.furtherChar() == this.op.MUL.charAt(1)){
+				this.nextChar();this.nextChar();
 				return new Token(this.def.MUL, this.op.MUL);
 			}
 			if(this.currentChar == this.op.DIV.charAt(0)){
@@ -112,20 +120,32 @@ var Lexer = function (code) {
 			if(isAlpha(this.currentChar))
 				return this.id();			
 			if(isDigit(this.currentChar))
-				return this.integer();
+				return this.num();
 		
 			this.error("Unexpected Token '" + this.currentChar + "'");
 			this.nextChar();
 		}
 		return new Token(this.def.EOF, null);
 	}
-	this.integer = function () {
+	this.num = function () {
 		var result = "";
-		while(isDigit(this.currentChar)){
+		var f = false;
+		while(isDigit(this.currentChar) || (!f && this.currentChar == ".")){
+			if(this.currentChar == ".")
+				f = true;
 			result += this.currentChar;
 			this.nextChar();
 		}
-		return new Token(this.def.INT, parseInt(result));
+		return new Token(this.def.NUMBER, parseFloat(result));
+	}
+	this.string = function () {
+		var result = "";
+		while(!(this.currentChar == this.op.STRING.charAt(0) && this.furtherChar() == this.op.STRING.charAt(1))){
+			result += this.currentChar;
+			this.nextChar();
+		}
+		this.nextChar();this.nextChar();
+		return new Token(this.def.STRING, result);
 	}
 	this.id = function () {
 		var result = "";

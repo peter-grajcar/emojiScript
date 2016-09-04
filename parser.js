@@ -9,7 +9,7 @@ var Parser = function (lexer) {
 		if(this.currentToken.type == type)
 			this.currentToken = this.lexer.nextToken();
 		else
-			this.lexer.error("Unexpected " + this.currentToken + " Expected " + this.lexer.op[type]);
+			this.lexer.error("Unexpected " + this.currentToken + " Expected " + this.lexer.def[type]);
 	}
 	
 	this.factor = function () {
@@ -22,8 +22,8 @@ var Parser = function (lexer) {
 			this.expect(this.lexer.def.MINUS);
 			return this.unOp(token, this.factor());
 		}
-		else if(token.type == this.lexer.def.INT){
-			this.expect(this.lexer.def.INT);
+		else if(token.type == this.lexer.def.NUMBER){
+			this.expect(this.lexer.def.NUMBER);
 			return token.val;
 		}
 		else if(token.type == this.lexer.def.LPAR){
@@ -31,6 +31,9 @@ var Parser = function (lexer) {
 			var result = this.expr();
 			this.expect(this.lexer.def.RPAR);
 			return result;
+		}else if(token.type == this.lexer.def.STRING){
+			this.expect(this.lexer.def.STRING);
+			return token.val;
 		}else{
 			return this.GLOBAL_SCOPE[this.variable()];
 		}
@@ -66,7 +69,9 @@ var Parser = function (lexer) {
 		return left;
 	}
 	this.program = function () {
+		this.expect(this.lexer.def.PROGRAM);
 		var cs = this.compoundStatement();
+		this.expect(this.lexer.def.END);
 		this.expect(this.lexer.def.DOT);
 		return cs;
 	}
@@ -81,7 +86,6 @@ var Parser = function (lexer) {
 		}
 		
 		this.expect(this.lexer.def.END);
-		
 		return compound;
 	}
 	this.statementList = function () {
