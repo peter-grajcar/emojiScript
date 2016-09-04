@@ -80,12 +80,28 @@ Boolean data type support 🏇, ◀️, ▶️ operators
 	
 ### 3. Operators
 
-|	Operator	|	Description	|
-| :-----------: | :-----------: |
-|	🏇			|	Equals		|
-|	▶️			|	More Than	|
-|	◀️			|	Less Than	|
-|	➕			|	Plus		|
-|	➖			|	Minus		|
-|	✖️			|	Multiply	|
-|	➗			|	Divide		|
+|Priority	|	Operator	|	Description	|
+| :-------: | :-----------: | :-----------: |
+|		0	|	🏇			|	Equals		|
+|		0	|	▶️			|	More Than	|
+|		0	|	◀️			|	Less Than	|
+|		1	|	➕			|	Plus		|
+|		1	|	➖			|	Minus		|
+|		2	|	✖️			|	Multiply	|
+|		2	|	➗			|	Divide		|
+
+### 4. Loops
+
+#### 4.1. While loop
+
+	🔝
+		🏃
+			😊 👉 0❤️
+			
+			🔁 😊 ◀️ 10 
+			🏃
+				😊👉😊➕1❤️
+				✏️(😊)❤️
+			🔚❤️
+		🔚
+	🔚🏁

@@ -124,32 +124,19 @@ var Parser = function (lexer) {
 			return this.compoundStatement();
 		if(this.currentToken.type == this.lexer.def.WHILE){
 			var pos = this.lexer.pos-this.currentToken.val.length-1;
-			/*
-				🔝
-					🏃
-						😊 👉 2❤️
-						🔁 😊 
-						🏃
-							😊👉😊➕😊❤️
-							✏️(😊)❤️
-						🔚❤️
-					🔚
-				🔚🏁
-			*/
 			
 			this.expect(this.lexer.def.WHILE);
 			
 			var condition = this.expr();
 			var compound = null;
 			
-			if(condition >= 100){
+			if(condition == false){
 				while(this.currentToken.type != this.lexer.def.END){
 					this.currentToken = this.lexer.nextToken();
 				}
 				this.expect(this.lexer.def.END);
 			}else{
 				compound = this.compoundStatement();
-			
 				this.lexer.pos = pos;
 			}
 			
