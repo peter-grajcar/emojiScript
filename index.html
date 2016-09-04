@@ -5,10 +5,10 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<style>
 			body { font-size: 2em; font-family: arial; }
-			button { font-size: 1.5em; }
+			button { font-size: 1em; }
 			textarea { font-size: 0.75em; overflow:scroll; white-space: nowrap; resize: vertical; }
-			#output {  }
-			#error { overflow-x: scroll; overflow-y: visible; white-space: nowrap; font-size: 0.75em; color: red; margin-top: 2em; }
+			#output { min-height: 3em; border: 1px solid black; overflow-x: scroll; overflow-y: visible; white-space: nowrap; font-size: 0.75em; margin-bottom: 2em; }
+			#error { min-height: 3em; border: 1px solid black; overflow-x: scroll; overflow-y: visible; white-space: nowrap; font-size: 0.75em; color: red; }
 		</style>
 		<script src="interpreter.js"></script>
 		<script src="parser.js"></script>
@@ -24,8 +24,10 @@
 		🖨(😄)❤️
 	🔚❤️
 🔚🏁</textarea>
-		<button id="run">Run</button><br>
+		<button id="run">Run</button><br><br>
+		Output
 		<div id="output"></div>
+		Error log
 		<div id="error"></div>
 		<script>
 			document.getElementById("run").onclick = function (){
@@ -36,6 +38,14 @@
 				var parser = new Parser(lexer);
 				var interpreter = new Interpreter(parser);
 				interpreter.parse();
+			}
+			document.getElementById("code").onkeydown = function (e){
+				if(e.keyCode == 9){
+					e.preventDefault();
+					var start = this.selectionStart;
+					this.value = this.value.substring(0,start) + "\t" + this.value.substring(this.selectionEnd);
+					this.selectionEnd = start+1;
+				}
 			}
 		
 		</script>
