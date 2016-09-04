@@ -6,19 +6,20 @@ var Lexer = function (code) {
 	var ignore = [" ", "\t", "\n"];
 	this.def = {
 		EOF: "EOF",
-		INT: "INT",
+		INT: "INTEGER",
 		PLUS: "PLUS",
 		MINUS: "MINUS",
-		MUL: "MUL",
-		DIV: "DIV",
-		LPAR: "LPAR",
-		RPAR: "RPAR",
+		MUL: "MULTIPLY",
+		DIV: "DIVIDE",
+		LPAR: "LEFT PARENTHESIS",
+		RPAR: "RIGHT PARENTHESIS",
 		BEGIN: "BEGIN",
 		END: "END",
 		DOT: "DOT",
-		ID: "ID",
+		ID: "IDENTIFIER",
 		ASSIGN: "ASSIGN",
-		SEMI: "SEMI"
+		SEMI: "SEMICOLON",
+		WRITE: "WRITE"
 	}
 	this.op = {
 		PLUS: "➕",
@@ -27,15 +28,14 @@ var Lexer = function (code) {
 		DIV: "➗",
 		LPAR: "(",
 		RPAR: ")",
-		BEGIN: "🏃",
-		END: "🔚",
 		ASSIGN: "👉",
 		SEMI: "❤️",
 		DOT: "🏁"
 	}
 	this.keywords = {
-		"🏃": new Token(this.def.BEGIN, this.op.BEGIN),
-		"🔚": new Token(this.def.END, this.op.END)
+		"🏃": new Token(this.def.BEGIN, "🏃"),
+		"🔚": new Token(this.def.END, "🔚"),
+		"🖨": new Token(this.def.WRITE, "🖨")
 	}
 	
 	this.error = function (msg) {
@@ -84,25 +84,20 @@ var Lexer = function (code) {
 				return new Token(this.def.SEMI, this.op.SEMI);
 			}
 			
-			if(isAlpha(this.currentChar))
-				return this.id();			
-			if(isDigit(this.currentChar))
-				return this.integer();
-			
-			if(this.currentChar == this.op.PLUS.charAt(0) && this.furtherChar() == this.op.PLUS.charAt(1)){
-				this.nextChar();this.nextChar();
+			if(this.currentChar == this.op.PLUS.charAt(0)){
+				this.nextChar();
 				return new Token(this.def.PLUS, this.op.PLUS);
 			}
-			if(this.currentChar == this.op.MINUS.charAt(0) && this.furtherChar() == this.op.MINUS.charAt(1)){
-				this.nextChar();this.nextChar();
+			if(this.currentChar == this.op.MINUS.charAt(0)){
+				this.nextChar();
 				return new Token(this.def.MINUS, this.op.MINUS);
 			}
-			if(this.currentChar == this.op.MUL.charAt(0) && this.furtherChar() == this.op.MUL.charAt(1)){
-				this.nextChar();this.nextChar();
+			if(this.currentChar == this.op.MUL.charAt(0)){
+				this.nextChar();
 				return new Token(this.def.MUL, this.op.MUL);
 			}
-			if(this.currentChar == this.op.DIV.charAt(0) && this.furtherChar() == this.op.DIV.charAt(1)){
-				this.nextChar();this.nextChar();
+			if(this.currentChar == this.op.DIV.charAt(0)){
+				this.nextChar();
 				return new Token(this.def.DIV, this.op.DIV);
 			}
 			if(this.currentChar == this.op.LPAR){
@@ -113,6 +108,11 @@ var Lexer = function (code) {
 				this.nextChar();
 				return new Token(this.def.RPAR, this.op.RPAR);
 			}
+			
+			if(isAlpha(this.currentChar))
+				return this.id();			
+			if(isDigit(this.currentChar))
+				return this.integer();
 		
 			this.error("Unexpected Token '" + this.currentChar + "'");
 			this.nextChar();
@@ -129,7 +129,7 @@ var Lexer = function (code) {
 	}
 	this.id = function () {
 		var result = "";
-		while(isID(this.currentChar)){
+		while(isID(this.currentChar) && !isOp(this.currentChar, this.furtherChar(), this)){
 			result += this.currentChar;
 			this.nextChar();
 			

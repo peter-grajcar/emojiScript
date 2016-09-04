@@ -98,6 +98,14 @@ var Parser = function (lexer) {
 	this.statement = function () {
 		if(this.currentToken.type == this.lexer.def.BEGIN)
 			return this.compoundStatement();
+		if(this.currentToken.type == this.lexer.def.WRITE){
+			this.expect(this.lexer.def.WRITE);
+			this.expect(this.lexer.def.LPAR);
+			var x = this.expr();
+			this.expect(this.lexer.def.RPAR);
+			document.getElementById("output").innerHTML += ("> <font color='blue'>" + x + "</font><br>");
+			return this.empty();
+		}
 		else if(this.currentToken.type == this.lexer.def.ID)
 			return this.assignmentStatement();
 		else

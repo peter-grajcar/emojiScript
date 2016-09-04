@@ -6,7 +6,7 @@ var Token = function (type, val) {
 		return "Token (" + this.type + ":'" + this.val + "')";
 	};
 	
-	/*document.write(this + "<br>");*/
+	//console.log(this);
 }
 
 Token.prototype.toString = Token.toString();
