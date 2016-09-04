@@ -21,21 +21,21 @@ var Lexer = function (code) {
 		SEMI: "SEMI"
 	}
 	this.op = {
-		PLUS: "+",
-		MINUS: "-",
-		MUL: "*",
-		DIV: "/",
+		PLUS: "➕",
+		MINUS: "➖",
+		MUL: "✖",
+		DIV: "➗",
 		LPAR: "(",
 		RPAR: ")",
-		BEGIN: "BEGIN",
-		END: "END",
-		ASSIGN: ":=",
-		SEMI: ";",
-		DOT: "."
+		BEGIN: "🏃",
+		END: "🔚",
+		ASSIGN: "👉",
+		SEMI: "❤️",
+		DOT: "🏁"
 	}
 	this.keywords = {
-		BEGIN: new Token(this.def.BEGIN, this.op.BEGIN),
-		END: new Token(this.def.END, this.op.END)
+		"🏃": new Token(this.def.BEGIN, this.op.BEGIN),
+		"🔚": new Token(this.def.END, this.op.END)
 	}
 	
 	this.error = function (msg) {
@@ -69,42 +69,40 @@ var Lexer = function (code) {
 	}
 	this.nextToken = function () {
 		while(this.currentChar != null){
-			this.whiteSpace();
-				
-			if(isAlpha(this.currentChar))
-				return this.id();		
+			this.whiteSpace();		
 				
 			if(this.currentChar == this.op.ASSIGN.charAt(0) && this.furtherChar() == this.op.ASSIGN.charAt(1)){
-				this.nextChar();
-				this.nextChar();
+				this.nextChar();this.nextChar();
 				return new Token(this.def.ASSIGN, this.op.ASSIGN);
 			}
-			if(this.currentChar == this.op.DOT){
-				this.nextChar();
+			if(this.currentChar == this.op.DOT.charAt(0) && this.furtherChar() == this.op.DOT.charAt(1)){
+				this.nextChar();this.nextChar();
 				return new Token(this.def.DOT, this.op.DOT);
 			}
-			if(this.currentChar == this.op.SEMI){
-				this.nextChar();
+			if(this.currentChar == this.op.SEMI.charAt(0) && this.furtherChar() == this.op.SEMI.charAt(1)){
+				this.nextChar();this.nextChar();
 				return new Token(this.def.SEMI, this.op.SEMI);
 			}
-				
+			
+			if(isAlpha(this.currentChar))
+				return this.id();			
 			if(isDigit(this.currentChar))
 				return this.integer();
 			
-			if(this.currentChar == this.op.PLUS){
-				this.nextChar();
+			if(this.currentChar == this.op.PLUS.charAt(0) && this.furtherChar() == this.op.PLUS.charAt(1)){
+				this.nextChar();this.nextChar();
 				return new Token(this.def.PLUS, this.op.PLUS);
 			}
-			if(this.currentChar == this.op.MINUS){
-				this.nextChar();
+			if(this.currentChar == this.op.MINUS.charAt(0) && this.furtherChar() == this.op.MINUS.charAt(1)){
+				this.nextChar();this.nextChar();
 				return new Token(this.def.MINUS, this.op.MINUS);
 			}
-			if(this.currentChar == this.op.MUL){
-				this.nextChar();
+			if(this.currentChar == this.op.MUL.charAt(0) && this.furtherChar() == this.op.MUL.charAt(1)){
+				this.nextChar();this.nextChar();
 				return new Token(this.def.MUL, this.op.MUL);
 			}
-			if(this.currentChar == this.op.DIV){
-				this.nextChar();
+			if(this.currentChar == this.op.DIV.charAt(0) && this.furtherChar() == this.op.DIV.charAt(1)){
+				this.nextChar();this.nextChar();
 				return new Token(this.def.DIV, this.op.DIV);
 			}
 			if(this.currentChar == this.op.LPAR){
@@ -134,9 +132,11 @@ var Lexer = function (code) {
 		while(isID(this.currentChar)){
 			result += this.currentChar;
 			this.nextChar();
+			
+			if(typeof this.keywords[result] !== "undefined")
+				return this.keywords[result];
 		}
-		if(typeof this.keywords[result] !== "undefined")
-			return this.keywords[result];
+		
 		return new Token(this.def.ID, result);
 	}
 }

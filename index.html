@@ -15,7 +15,6 @@
 		<script src="lexer.js"></script>
 		<script src="token.js"></script>
 		<script src="utils.js"></script>
-		<script src="emojiLookup.js"></script>
 	</head>
 	<body>
 		<textarea style="width: 100%" rows="10" id="code">
@@ -32,12 +31,11 @@
 			document.getElementById("run").onclick = function (){
 				document.getElementById("error").innerHTML = "";
 				
-				var lexer = new Lexer( translate(document.getElementById("code").value) );
+				var lexer = new Lexer( document.getElementById("code").value );
 				var parser = new Parser(lexer);
 				var interpreter = new Interpreter(parser);
 				interpreter.parse();
 				
-				document.getElementById("error").innerHTML = translate_reverse(document.getElementById("error").innerHTML);
 				document.getElementById("output").innerHTML = JSON.stringify(parser.GLOBAL_SCOPE)
 													.replace(/,/g,"<br>")
 													.replace(/{/g,"")
