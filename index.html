@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<style>
+			body { font-size: 2em; font-family: arial; }
+			button { font-size: 1.5em; }
+			textarea { font-size: 0.75em; overflow:scroll; white-space: nowrap; }
+			#output { padding-left: 40%; }
+			#error { overflow-x: scroll; overflow-y: visible; white-space: nowrap; font-size: 0.75em; color: red; margin-top: 2em; }
+		</style>
+		<script src="interpreter.js"></script>
+		<script src="parser.js"></script>
+		<script src="lexer.js"></script>
+		<script src="token.js"></script>
+		<script src="utils.js"></script>
+		<script src="emojiLookup.js"></script>
+	</head>
+	<body>
+		<textarea style="width: 100%" rows="10" id="code">
+🏃
+	🏃
+		😄 👉 2❤️
+	🔚❤️
+	🐰 👉 17❤️
+🔚🏁</textarea>
+		<button id="run">Run</button><br>
+		<div id="output"></div>
+		<div id="error"></div>
+		<script>
+			document.getElementById("run").onclick = function (){
+				document.getElementById("error").innerHTML = "";
+				
+				var lexer = new Lexer( translate(document.getElementById("code").value) );
+				var parser = new Parser(lexer);
+				var interpreter = new Interpreter(parser);
+				interpreter.parse();
+				
+				document.getElementById("error").innerHTML = translate_reverse(document.getElementById("error").innerHTML);
+				document.getElementById("output").innerHTML = JSON.stringify(parser.GLOBAL_SCOPE)
+													.replace(/,/g,"<br>")
+													.replace(/{/g,"")
+													.replace(/"/g,"")
+													.replace(/:/g," = ")
+													.replace(/}/g,"");
+			}
+		
+		</script>
+	</body>
+</html>
