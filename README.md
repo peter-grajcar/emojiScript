@@ -6,10 +6,14 @@ Here is a simple example of emojiScript code:
 
 	🏃
 		🏃
-			😄 👉 2❤️
+			😄 👉 2✖5❤️
 			✏️(😄)❤️
 		🔚❤️
 	🔚🏁
+	
+Ouput:
+
+	10
 
 Every program starts with 🏃 and ends with 🔚🏁 similarly to Pascal's `BEGIN` and `END.`.
 
