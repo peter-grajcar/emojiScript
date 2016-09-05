@@ -3,7 +3,7 @@
 emojiScript is interpreted programming language based on emojis. The interpreter of emojiScript is written in javaScript.
 Because one picture is worth a thousand words.
 
-## Hello World
+## 'Hello World' program example
 
 ```
 🔝
