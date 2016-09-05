@@ -162,7 +162,16 @@ var Parser = function (lexer) {
 			var compound = null;
 			//if condition fails skip all tokens until END
 			if(condition == false){
-				while(this.currentToken.type != this.lexer.def.END){
+				var blocks = 0;
+				while(this.currentToken.type != this.lexer.def.END || blocks != 1){
+					if(this.currentToken.type == this.lexer.def.BEGIN){
+						blocks++;
+						console.log(blocks);
+					}
+					else if(this.currentToken.type == this.lexer.def.END){
+						blocks--;
+						console.log(blocks);
+					}
 					this.currentToken = this.lexer.nextToken();
 				}
 				this.expect(this.lexer.def.END);
@@ -183,7 +192,16 @@ var Parser = function (lexer) {
 			
 			//if condition fails skip all tokens until END
 			if(condition == false){
-				while(this.currentToken.type != this.lexer.def.END){
+				var blocks = 0;
+				while(this.currentToken.type != this.lexer.def.END || blocks != 1){
+					if(this.currentToken.type == this.lexer.def.BEGIN){
+						blocks++;
+						console.log(blocks);
+					}
+					else if(this.currentToken.type == this.lexer.def.END){
+						blocks--;
+						console.log(blocks);
+					}
 					this.currentToken = this.lexer.nextToken();
 				}
 				this.expect(this.lexer.def.END);
