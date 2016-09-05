@@ -24,6 +24,10 @@ var Lexer = function (code) {
 		LESS: "LESS THAN",
 		MORE: "MORE THAN",
 		MOD: "MODULUS",
+		AND: "AND",
+		OR: "OR",
+		XOR: "XOR",
+		NOT: "NOT",
 		
 		PROGRAM: "PROGRAM",
 		BEGIN: "BEGIN",
@@ -54,7 +58,11 @@ var Lexer = function (code) {
 		EQ: "🏇",
 		LESS: "◀️",
 		MORE: "▶️",
-		MOD: "💔"
+		MOD: "💔",
+		AND: "🍻",
+		OR: "🍺",
+		XOR: "💎",
+		NOT: "💩"
 	}
 	//Registered keywords
 	this.keywords = {
@@ -162,6 +170,22 @@ var Lexer = function (code) {
 			if(this.currentChar == this.op.MOD.charAt(0) && this.furtherChar() == this.op.MOD.charAt(1)){
 				this.nextChar();this.nextChar();
 				return new Token(this.def.MOD, this.op.MOD);
+			}
+			if(this.currentChar == this.op.AND.charAt(0) && this.furtherChar() == this.op.AND.charAt(1)){
+				this.nextChar();this.nextChar();
+				return new Token(this.def.AND, this.op.AND);
+			}
+			if(this.currentChar == this.op.OR.charAt(0) && this.furtherChar() == this.op.OR.charAt(1)){
+				this.nextChar();this.nextChar();
+				return new Token(this.def.OR, this.op.OR);
+			}
+			if(this.currentChar == this.op.XOR.charAt(0) && this.furtherChar() == this.op.XOR.charAt(1)){
+				this.nextChar();this.nextChar();
+				return new Token(this.def.XOR, this.op.XOR);
+			}
+			if(this.currentChar == this.op.NOT.charAt(0) && this.furtherChar() == this.op.NOT.charAt(1)){
+				this.nextChar();this.nextChar();
+				return new Token(this.def.NOT, this.op.NOT);
 			}
 			
 			if(isAlpha(this.currentChar))

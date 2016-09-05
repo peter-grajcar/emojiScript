@@ -26,6 +26,10 @@ var Parser = function (lexer) {
 			this.expect(this.lexer.def.MINUS);
 			return this.unOp(token, this.factor());
 		}
+		if(token.type == this.lexer.def.NOT){
+			this.expect(this.lexer.def.NOT);
+			return this.unOp(token, this.factor());
+		}
 		else if(token.type == this.lexer.def.NUMBER){
 			this.expect(this.lexer.def.NUMBER);
 			return token.val;
@@ -79,8 +83,8 @@ var Parser = function (lexer) {
 		
 		return left;
 	}
-	//Priority level 0 operators
-	this.expr = function () {
+	//Priority level 1 operators
+	this.logic = function () {
 		var left = this.sum();
 		
 		while(this.currentToken.type == this.lexer.def.EQ || this.currentToken.type == this.lexer.def.MORE || this.currentToken.type == this.lexer.def.LESS){
@@ -93,6 +97,23 @@ var Parser = function (lexer) {
 				this.expect(this.lexer.def.LESS);
 			
 			left = this.binOp( left, operator, this.sum() );  
+		}
+		return left;
+	}
+	//Priority level 0 operators
+	this.expr = function () {
+		var left = this.logic();
+		
+		while(this.currentToken.type == this.lexer.def.AND || this.currentToken.type == this.lexer.def.OR || this.currentToken.type == this.lexer.def.XOR){
+			var operator = this.currentToken;
+			if(this.currentToken.type == this.lexer.def.AND)
+				this.expect(this.lexer.def.AND);
+			if(this.currentToken.type == this.lexer.def.OR)
+				this.expect(this.lexer.def.OR);
+			if(this.currentToken.type == this.lexer.def.XOR)
+				this.expect(this.lexer.def.XOR);
+			
+			left = this.binOp( left, operator, this.logic() );  
 		}
 		return left;
 	}
@@ -236,12 +257,24 @@ var Parser = function (lexer) {
 			case this.lexer.def.MOD: 
 				return left % right;
 				break;
+			case this.lexer.def.AND: 
+				return left & right;
+				break;
+			case this.lexer.def.OR: 
+				return left | right;
+				break;
+			case this.lexer.def.XOR: 
+				return left ^ right;
+				break;
 			case this.lexer.def.ASSIGN:
 				this.GLOBAL_SCOPE[left] = right;
 		}
 	}
 	this.unOp = function(op, right){
 		switch(op.type){
+			case this.lexer.def.NOT: 
+				return !right;
+				break;
 			case this.lexer.def.PLUS: 
 				return right;
 				break;

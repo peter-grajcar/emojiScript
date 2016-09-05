@@ -103,16 +103,24 @@ Boolean data type support 🏇, ◀️, ▶️ operators and may have values eit
 	
 ### 3. Operators
 
-|Priority	|	Operator	|	Description	|
-| :-------: | :-----------: | :-----------: |
-|		0	|	🏇			|	Equals		|
-|		0	|	▶️			|	More Than	|
-|		0	|	◀️			|	Less Than	|
-|		1	|	➕			|	Plus		|
-|		1	|	➖			|	Minus		|
-|		2	|	✖️			|	Multiply	|
-|		2	|	➗			|	Divide		|
-|		2	|	💔			|	Modulus		|
+|Priority	|	Operator	|	Description			|
+| :-------: | :-----------: | :-------------------: |
+|		1	|	🍻			|	And					|
+|		1	|	🍺			|	Or					|
+|		1	|	💎			|	XOR					|
+|		1	|	🏇			|	Equals				|
+|		1	|	▶️			|	More Than			|
+|		1	|	◀️			|	Less Than			|
+|		2	|	➕			|	Plus				|
+|		2	|	➖			|	Minus				|
+|		3	|	✖️			|	Multiply			|
+|		3	|	➗			|	Divide				|
+|		3	|	💔			|	Modulus				|
+|		4	|	(			|	Left Parenthesis	|
+|		4	|	)			|	Right Parenthesis	|
+|		5	|	➕			|	Unary Plus			|
+|		5	|	➖			|	Unary Minus			|
+|		5	|	💩			|	Not					|
 
 ### 4. Conditions
 
