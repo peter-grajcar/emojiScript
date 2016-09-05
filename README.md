@@ -5,37 +5,39 @@ Because one picture is worth a thousand words.
 
 ## Hello World
 
-	🔝
-		🏃
-			✏️(💬👋🌍💬)❤️
-		🔚
-	🔚🏁
+```
+🔝
+	🏃
+		✏️(💬👋🌍💬)❤️
+	🔚
+🔚🏁
+```
 	
 Output:
 
-	👋🌍
-
-
+```
+> 👋🌍
+```
 
 ## Documentation
 
-### 1. Basic Syntax
+### 1. Syntax
 
 #### 1.1. Program
 
-Every emojiScript program must start with keyword 🔝 followed by main block of code and end with keyword 🔚 followed by 🏁.
-
-	🔝
-		{main block of code}
-	🔚🏁
+```
+🔝
+	{main block of code}
+🔚🏁
+```
 	
 #### 1.2. Block of code
 
-Block of code have following syntax:
-
-	🏃
-		{code}
-	🔚
+```
+🏃
+	{code}
+🔚
+```
 	
 #### 1.3. Semicolons
 
@@ -49,34 +51,55 @@ emojiScript is weakly typed language and there is no need to explicitly define d
 
 Valid identifier must not start with a digit, contain white-space characters, tabs, new-line characters, parenthesis or dots
 
-#### 2.2 Assignment
+#### 2.2. Assignment
 
 Assignment of values to variables is done by operator 👉
 
-	😄 👉 💬👋🌍💬❤️
+```
+{variable} 👉 {value}❤️
+```
+
+```
+😄 👉 💬👋🌍💬❤️
+```
 	
-#### 2.3 Data types
+#### 2.3. Data types
 
-##### 2.3.1 Number
+##### 2.3.1. Number
 
-Numbers represents number with floating point and supports 4 basic operators: ✖️, ➕, ➖, ➗, 🏇, ◀️, ▶️
+Number represents numbers with floating point and supports 4 basic operators: ✖️, ➕, ➖, ➗, 🏇, ◀️, ▶️
 
-	😄 👉 4❤️
-	😂 👉 10.85❤️
+```
+😄 👉 4❤️
+```
+
+```
+😂 👉 10.85❤️
+```
 	
-##### 2.3.2 String
+##### 2.3.2. String
 
 String may contain any character except 💬	and support ➕, 🏇, ◀️, ▶️ operators
 
-	😄 👉 💬👋🌍💬❤️
-	😂 👉 💬👋💬 ➕ 💬🌍💬❤️
+```
+😄 👉 💬👋🌍💬❤️
+```
 	
-##### 2.3.3 Boolean
+```
+😂 👉 💬👋💬 ➕ 💬🌍💬❤️
+```
+	
+##### 2.3.3. Boolean
 
-Boolean data type support 🏇, ◀️, ▶️ operators
+Boolean data type support 🏇, ◀️, ▶️ operators and may have values either 👍 or 👎
 
-	😄 👉 true❤️
-	😂 👉 false❤️
+```
+😄 👉 👍❤️
+```
+
+```
+😂 👉 👎❤️
+```
 	
 ### 3. Operators
 
@@ -89,19 +112,89 @@ Boolean data type support 🏇, ◀️, ▶️ operators
 |		1	|	➖			|	Minus		|
 |		2	|	✖️			|	Multiply	|
 |		2	|	➗			|	Divide		|
+|		2	|	💔			|	Modulus		|
 
-### 4. Loops
+### 4. Conditions
 
-#### 4.1. While loop
+#### 4.1. If statement
 
-	🔝
+##### 4.1.1. Syntax
+
+```
+🆗 {condition : boolean} 
+🏃
+    {code}
+🔚❤️
+```
+
+##### 4.1.2. Sample code
+
+```
+🔝
+	🏃
+		😄 👉 2❤️
+
+		🆗 😄 ▶️ 5
 		🏃
-			😊 👉 0❤️
-			
-			🔁 😊 ◀️ 10 
-			🏃
-				😊👉😊➕1❤️
-				✏️(😊)❤️
-			🔚❤️
-		🔚
-	🔚🏁
+			✏️(💬👍💬)❤️
+		🔚❤️
+
+		🆗 😄 ◀️ 5
+		🏃
+			✏️(💬👎💬)❤️
+		🔚❤️
+	🔚
+🔚🏁
+```
+
+Output:
+
+```
+> 👎
+```
+
+### 5. Loops
+
+#### 5.1. While loop
+
+##### 5.1.1. Syntax
+
+```
+🔁 {condition : boolean} 
+🏃
+	{code}
+🔚❤️
+```
+
+##### 5.1.2. Sample code
+
+```
+🔝
+	🏃
+		😊 👉 0❤️
+		
+		🔁 😊 ◀️ 10 
+		🏃
+			😊👉😊➕1❤️
+			✏️(😊)❤️
+		🔚❤️
+	🔚
+🔚🏁
+```
+
+Output:
+
+```
+> 1
+> 2
+> 3
+> 4
+> 5
+> 6
+> 7
+> 8
+> 9
+> 10
+```
+
+## Sample programs

@@ -23,16 +23,21 @@ var Lexer = function (code) {
 		EQ: "EQUALS",
 		LESS: "LESS THAN",
 		MORE: "MORE THAN",
+		MOD: "MODULUS",
 		
+		PROGRAM: "PROGRAM",
 		BEGIN: "BEGIN",
 		END: "END",
+		
 		DOT: "DOT",
 		ID: "IDENTIFIER",
 		ASSIGN: "ASSIGN",
 		SEMI: "SEMICOLON",
+		
 		WRITE: "WRITE",
-		PROGRAM: "PROGRAM",
-		WHILE: "WHILE"
+		
+		WHILE: "WHILE",
+		IF: "IF"
 	}
 	//Registered characters
 	this.op = {
@@ -49,6 +54,7 @@ var Lexer = function (code) {
 		EQ: "🏇",
 		LESS: "◀️",
 		MORE: "▶️",
+		MOD: "💔"
 	}
 	//Registered keywords
 	this.keywords = {
@@ -57,8 +63,9 @@ var Lexer = function (code) {
 		"✏️": new Token(this.def.WRITE, "✏️"),
 		"🔝": new Token(this.def.PROGRAM, "🔝"),
 		"🔁": new Token(this.def.WHILE, "🔁"),
-		"true": new Token(this.def.BOOL, true),
-		"false": new Token(this.def.BOOL, false)
+		"👍": new Token(this.def.BOOL, true),
+		"👎": new Token(this.def.BOOL, false),
+		"🆗": new Token(this.def.IF, "🆗")
 	}
 	
 	this.error = function (msg) {
@@ -151,6 +158,10 @@ var Lexer = function (code) {
 			if(this.currentChar == this.op.MORE.charAt(0) && this.furtherChar() == this.op.MORE.charAt(1)){
 				this.nextChar();this.nextChar();
 				return new Token(this.def.MORE, this.op.MORE);
+			}
+			if(this.currentChar == this.op.MOD.charAt(0) && this.furtherChar() == this.op.MOD.charAt(1)){
+				this.nextChar();this.nextChar();
+				return new Token(this.def.MOD, this.op.MOD);
 			}
 			
 			if(isAlpha(this.currentChar))

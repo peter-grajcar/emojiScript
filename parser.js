@@ -49,12 +49,14 @@ var Parser = function (lexer) {
 	this.term = function () {
 		var left = this.factor();
 		
-		while(this.currentToken.type == this.lexer.def.MUL || this.currentToken.type == this.lexer.def.DIV){
+		while(this.currentToken.type == this.lexer.def.MUL || this.currentToken.type == this.lexer.def.DIV || this.currentToken.type == this.lexer.def.MOD){
 			var operator = this.currentToken;
 			if(this.currentToken.type == this.lexer.def.MUL)
 				this.expect(this.lexer.def.MUL);
 			else if(this.currentToken.type == this.lexer.def.DIV)
 				this.expect(this.lexer.def.DIV);
+			else if(this.currentToken.type == this.lexer.def.MOD)
+				this.expect(this.lexer.def.MOD);
 			
 			left = this.binOp( left, operator, this.factor() );  
 		}
@@ -132,7 +134,24 @@ var Parser = function (lexer) {
 	this.statement = function () {
 		if(this.currentToken.type == this.lexer.def.BEGIN)
 			return this.compoundStatement();
-		//While loop
+		//IF statement
+		if(this.currentToken.type == this.lexer.def.IF){
+			this.expect(this.lexer.def.IF);
+			var condition = this.expr();
+			var compound = null;
+			//if condition fails skip all tokens until END
+			if(condition == false){
+				while(this.currentToken.type != this.lexer.def.END){
+					this.currentToken = this.lexer.nextToken();
+				}
+				this.expect(this.lexer.def.END);
+			}else{
+				compound = this.compoundStatement();
+			}
+			
+			return compound;
+		}
+		//WHILE loop
 		if(this.currentToken.type == this.lexer.def.WHILE){
 			var pos = this.lexer.pos-this.currentToken.val.length-1;
 			
@@ -213,6 +232,9 @@ var Parser = function (lexer) {
 				break;
 			case this.lexer.def.MORE: 
 				return left > right;
+				break;
+			case this.lexer.def.MOD: 
+				return left % right;
 				break;
 			case this.lexer.def.ASSIGN:
 				this.GLOBAL_SCOPE[left] = right;

@@ -7,11 +7,16 @@
 			*:focus { outline: none; }
 			body { font-size: 2em; font-family: arial; }
 			button { font-size: 1em; }
-			textarea { font-size: 0.75em; overflow:scroll; white-space: nowrap; resize: vertical; }
+			textarea { width: 100%; font-size: 0.75em; overflow:scroll; white-space: nowrap; resize: vertical; }
 			#output { min-height: 3em; border: 1px solid black; overflow-x: scroll; overflow-y: visible; white-space: nowrap; font-size: 0.75em; margin-bottom: 2em; }
 			#error { min-height: 3em; border: 1px solid black; overflow-x: scroll; overflow-y: visible; white-space: nowrap; font-size: 0.75em; color: red; }
 			#keyboard { border: 1px solid black; margin-bottom: 1em; text-align: center; }
 			#keyboard button { border: 1px solid black; background: none; margin: 0.5em;}
+			
+			@media only screen and (min-width: 600px){
+				textarea { width: 50%; display: inline-block; vertical-align: middle;  }
+				#keyboard { width: 45%; margin-left: auto; margin-right: auto; display: inline-block; vertical-align: middle; }
+			}
 		</style>
 		<script src="interpreter.js"></script>
 		<script src="parser.js"></script>
@@ -20,7 +25,7 @@
 		<script src="utils.js"></script>
 	</head>
 	<body>
-		<textarea style="width: 100%" rows="10" id="code">🔝&#10;	🏃&#10;		😄 👉 2❤️&#10;		✏️(😄)❤️&#10;	🔚&#10;🔚🏁</textarea>
+		<textarea rows="10" id="code">🔝&#10;	🏃&#10;		😄 👉 2❤️&#10;		✏️(😄)❤️&#10;	🔚&#10;🔚🏁</textarea>
 		<div id="keyboard">
 			<button class="key" value="🔝">🔝</button>
 			<button class="key" value="🏃">🏃</button>
@@ -40,7 +45,11 @@
 			<button class="key" value="🏇">🏇</button>
 			<button class="key" value="◀️">◀️</button>
 			<button class="key" value="▶️">▶️</button>
-		</div>
+			<button class="key" value="👍">👍</button>
+			<button class="key" value="👎">👎</button>
+			<button class="key" value="🆗">🆗</button>
+			<button class="key" value="💔">💔</button>
+		</div><br>
 		<button id="run">Run</button><br><br>
 		Output
 		<div id="output"></div>
