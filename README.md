@@ -67,7 +67,7 @@ Assignment of values to variables is done by operator 👉
 
 ##### 2.3.1. Number
 
-Number represents numbers with floating point and supports 4 basic operators: ✖️, ➕, ➖, ➗, 🏇, ◀️, ▶️
+Number represents numbers with floating point
 
 ```
 😄 👉 4❤️
@@ -79,7 +79,7 @@ Number represents numbers with floating point and supports 4 basic operators: �
 	
 ##### 2.3.2. String
 
-String may contain any character except 💬	and support ➕, 🏇, ◀️, ▶️ operators
+String may contain any character except 💬
 
 ```
 😄 👉 💬👋🌍💬❤️
@@ -91,7 +91,7 @@ String may contain any character except 💬	and support ➕, 🏇, ◀️, ▶�
 	
 ##### 2.3.3. Boolean
 
-Boolean data type support 🏇, ◀️, ▶️ operators and may have values either 👍 or 👎
+Boolean data type may have values either 👍 or 👎
 
 ```
 😄 👉 👍❤️
