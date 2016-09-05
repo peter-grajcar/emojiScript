@@ -237,3 +237,10 @@ Output:
 	🔚
 🔚🏁
 ```
+
+Output:
+
+```
+> 37 is a prime:
+> true
+```
