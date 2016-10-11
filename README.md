@@ -10,29 +10,33 @@ Because one picture is worth a thousand words.
 [Documentation](#3)
 
 * [1. Syntax](#4)
- * [1.1. Program](#5)
- * [1.2. Block of code](#6)
- * [1.3. Semicolons](#7)
+  * [1.1. Program](#5)
+  * [1.2. Block of code](#6)
+  * [1.3. Semicolons](#7)
 
+  
 * [2. Variables](#8)
- * [2.1. Identifiers](#9)
- * [2.2. Assignment](#10)
- * [2.3. Data types](#11)
-   * [2.3.1. Number](#12)  
-   * [2.3.2. String](#13)
-   * [2.3.3. Boolean](#14)
+  * [2.1. Identifiers](#9)
+  * [2.2. Assignment](#10)
+  * [2.3. Data types](#11)
+    * [2.3.1. Number](#12)  
+    * [2.3.2. String](#13)
+    * [2.3.3. Boolean](#14)
+   
    
 * [3. Operators](#15)
  
+ 
 * [4. Conditions](#16)
- * [4.1. If statement](#17)
-   * [4.1.1. Syntax](#18)
-   * [4.1.2. Sample code](#19)
+  * [4.1. If statement](#17)
+    * [4.1.1. Syntax](#18)
+    * [4.1.2. Sample code](#19)
+   
    
 * [5. Loops](#20)
- * [5.1. While loop](#21)
-   * [5.1.1. Syntax](#22)
-   * [5.1.2. Sample code](#23)
+  * [5.1. While loop](#21)
+    * [5.1.1. Syntax](#22)
+    * [5.1.2. Sample code](#23)
    
 [Sample programs](#24)
 
