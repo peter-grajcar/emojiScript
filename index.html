@@ -7,10 +7,11 @@
 			*:focus { outline: none; }
 			body { font-size: 2em; font-family: arial; }
 			button { font-size: 1em; }
+			select { font-size: 1em; }
 			textarea { width: 100%; font-size: 0.75em; overflow:scroll; white-space: nowrap; resize: vertical; }
 			#output { min-height: 3em; border: 1px solid black; overflow-x: scroll; overflow-y: visible; white-space: nowrap; font-size: 0.75em; margin-bottom: 2em; }
 			#error { min-height: 3em; border: 1px solid black; overflow-x: scroll; overflow-y: visible; white-space: nowrap; font-size: 0.75em; color: red; }
-			#keyboard { border: 1px solid black; margin-bottom: 1em; text-align: center; }
+			#keyboard { display: none; border: 1px solid black; margin-bottom: 1em; text-align: center; }
 			#keyboard button { border: 1px solid black; background: none; margin: 0.5em;}
 			
 			@media only screen and (min-width: 600px){
@@ -22,44 +23,58 @@
 		<script src="parser.js"></script>
 		<script src="lexer.js"></script>
 		<script src="token.js"></script>
+		<script src="io.js"></script>
 		<script src="utils.js"></script>
+		<script src="library.js"></script>
+		<script src="https://twemoji.maxcdn.com/2/twemoji.min.js?2.1.2"></script>
 	</head>
 	<body>
-		<textarea rows="10" id="code">🔝&#10;	🏃&#10;		😄 👉 2❤️&#10;		✏️(😄)❤️&#10;	🔚&#10;🔚🏁</textarea>
+		<select id="samples">
+		
+		</select>
+		<button id="load">Load</button><br><br>
+		<textarea rows="16" id="code">🔝&#10;	🏃&#10;		😄 👉 2❤️&#10;		✏️(😄)❤️&#10;	🔚&#10;🔚🏁</textarea>
 		<div id="keyboard">
-			<button class="key" value="🔝">🔝</button>
-			<button class="key" value="🏃">🏃</button>
-			<button class="key" value="👉">👉</button>
-			<button class="key" value="✏️">✏️</button>
-			<button class="key" value="🏁">🏁</button>
-			<button class="key" value="🔚">🔚</button>
-			<button class="key" value="❤️">❤️</button>
-			<button class="key" value="✖️">✖️</button>
-			<button class="key" value="➕">➕</button>
-			<button class="key" value="➖">➖</button>
-			<button class="key" value="➗">➗</button>
-			<button class="key" value="💬">💬</button>
-			<button class="key" value="😊">😊</button>
-			<button class="key" value="😂">😂</button>
-			<button class="key" value="🔁">🔁</button>
-			<button class="key" value="🏇">🏇</button>
-			<button class="key" value="◀️">◀️</button>
-			<button class="key" value="▶️">▶️</button>
-			<button class="key" value="👍">👍</button>
-			<button class="key" value="👎">👎</button>
-			<button class="key" value="🆗">🆗</button>
-			<button class="key" value="💔">💔</button>
-			<button class="key" value="🍻">🍻</button>
-			<button class="key" value="🍺">🍺</button>
-			<button class="key" value="💎">💎</button>
-			<button class="key" value="💩">💩</button>
+			<abbr title="PROGRAM"><button class="key" value="🔝">🔝</button></abbr>
+			<abbr title="BEGIN"><button class="key" value="🏃">🏃</button></abbr>
+			<abbr title="ASSIGN"><button class="key" value="👉">👉</button></abbr>
+			<abbr title="PRINT"><button class="key" value="✏️">✏️</button></abbr>
+			<abbr title="END PROGRAM"><button class="key" value="🏁">🏁</button></abbr>
+			<abbr title="END"><button class="key" value="🔚">🔚</button></abbr>
+			<abbr title="SEMICOLON"><button class="key" value="❤️">❤️</button></abbr>
+			<abbr title="MULTIPLICATION"><button class="key" value="✖️">✖️</button></abbr>
+			<abbr title="ADDITION"><button class="key" value="➕">➕</button></abbr>
+			<abbr title="SUBTRACTION"><button class="key" value="➖">➖</button></abbr>
+			<abbr title="DIVISION"><button class="key" value="➗">➗</button></abbr>
+			<abbr title="QUOTE"><button class="key" value="💬">💬</button></abbr>
+			<abbr title=""><button class="key" value="😊">😊</button></abbr>
+			<abbr title=""><button class="key" value="😂">😂</button></abbr>
+			<abbr title="WHILE"><button class="key" value="🔁">🔁</button></abbr>
+			<abbr title="EQUALS"><button class="key" value="🏇">🏇</button></abbr>
+			<abbr title="LESS THAN"><button class="key" value="◀️">◀️</button></abbr>
+			<abbr title="MORE THAN"><button class="key" value="▶️">▶️</button></abbr>
+			<abbr title="TRUE"><button class="key" value="👍">👍</button></abbr>
+			<abbr title="FALSE"><button class="key" value="👎">👎</button></abbr>
+			<abbr title="IF"><button class="key" value="🆗">🆗</button></abbr>
+			<abbr title="MOD"><button class="key" value="💔">💔</button></abbr>
+			<abbr title="AND"><button class="key" value="🍻">🍻</button></abbr>
+			<abbr title="OR"><button class="key" value="🍺">🍺</button></abbr>
+			<abbr title="XOR"><button class="key" value="💎">💎</button></abbr>
+			<abbr title="NOT"><button class="key" value="💩">💩</button></abbr>
 		</div><br>
-		<button id="run">Run</button><br><br>
+		<button id="run">Run</button>
+		<br><br>
 		Output
 		<div id="output"></div>
 		Error log
 		<div id="error"></div>
-		<script>
+		<script>	
+			var output = new Output();
+			output.println = function (x) {
+				document.getElementById("output").innerHTML += "> <font color=\"blue\">" + x + "</font><br>";
+			}
+		
+		
 			document.getElementById("run").onclick = function (){
 				document.getElementById("output").innerHTML = "";
 				document.getElementById("error").innerHTML = "";
@@ -67,6 +82,7 @@
 				var lexer = new Lexer( document.getElementById("code").value );
 				var parser = new Parser(lexer);
 				var interpreter = new Interpreter(parser);
+				parser.output = output;
 				interpreter.parse();
 			}
 			document.getElementById("code").onkeydown = function (e){
@@ -82,13 +98,19 @@
 			for(var i = 0; i < elements.length; i++){
 				var element = elements[i];
 				element.onclick = function () {
-					console.log("A");
 					var textarea = document.getElementById("code");
 					var start = textarea.selectionStart;
 					textarea.value = textarea.value.substring(0,start) + this.value + textarea.value.substring(textarea.selectionEnd);
 					textarea.selectionEnd = start+this.value.length;
 					textarea.focus();
 				}
+			}
+			
+			for(var i = 0; i < library.length; i++){
+				 document.getElementById("samples").innerHTML += "<option value=" + i + ">" + library[i].name +  "</option>";
+			}
+			document.getElementById("load").onclick = function () {
+				document.getElementById("code").value =  library[document.getElementById("samples").value].code;
 			}
 		
 		</script>

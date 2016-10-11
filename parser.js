@@ -1,5 +1,7 @@
 var Parser = function (lexer) {
 	this.lexer = lexer;
+	this.input = new Input();
+	this.output = new Output();
 	this.currentToken = this.lexer.nextToken();
 	this.GLOBAL_SCOPE = {
 		
@@ -196,11 +198,9 @@ var Parser = function (lexer) {
 				while(this.currentToken.type != this.lexer.def.END || blocks != 1){
 					if(this.currentToken.type == this.lexer.def.BEGIN){
 						blocks++;
-						console.log(blocks);
 					}
 					else if(this.currentToken.type == this.lexer.def.END){
 						blocks--;
-						console.log(blocks);
 					}
 					this.currentToken = this.lexer.nextToken();
 				}
@@ -218,7 +218,9 @@ var Parser = function (lexer) {
 			this.expect(this.lexer.def.LPAR);
 			var x = this.expr();
 			this.expect(this.lexer.def.RPAR);
-			document.getElementById("output").innerHTML += ("> <font color='blue'>" + x + "</font><br>");
+			
+			this.output.println(x);
+			
 			return this.emptyStatement();
 		}
 		else if(this.currentToken.type == this.lexer.def.ID){
