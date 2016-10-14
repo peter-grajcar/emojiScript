@@ -3,18 +3,69 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+		<link rel="stylesheet" href="styles/ide.css"/>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 		<script>
 			$(document).ready(function(){
-			
-		
-			
+				$("li").mouseover(function() {
+						$(this).find("ul").css("display", "block");
+				}).mouseout(function() {
+						$(this).find("ul").css("display", "none");
+				});
+				function highlight(){
+					var code = $("#code #textarea").val()
+					var cursor = $("#code #textarea").prop("selectionStart");
+					var before = code.substring(0,cursor);
+					var rows = (before.match(/[\n\r]/g) || []).length;
+					var cols = cursor - before.lastIndexOf("\n");
+					console.log();
+										
+					$("#code #overlay").html("<div class=\"line\">?</div>" + code.replace(/[\n\r]/g, "<br><div class=\"line\">?</div>"));
+					$("#code #cursor").css("top", rows + "em")
+										.css("left", (cols*0.6-0.8) + "em");
+				}
+				$("#code #textarea").keypress(highlight)
+									.keydown(highlight)
+									.keyup(highlight)
+									.scroll(function(){
+										document.getElementById('overlay').scrollTop = document.getElementById('textarea').scrollTop
+									}).click(highlight);
 			});
 		</script>
 	</head>
 	<body>
-		<svg>
-		
-		</svg>
+		<header>
+			<ul>
+				<li>
+					File
+					<ul>
+						<li>Save</li>
+						<li>Open</li>
+					</ul>
+				</li>
+				<li>
+					Edit
+					<ul>
+						<li>Undo</li>
+						<li>Redo</li>
+					</ul>
+				</li>
+				<li>
+					View
+					<ul>
+						<li>Output</li>
+						<li>Variable scope</li>
+					</ul>
+				</li>
+			</ul>
+		</header>
+		<main>
+			<div id="code">
+				<div id="overlay"></div>
+				<span id="cursor">|</span>
+				<textarea id="textarea" spellcheck="false"></textarea>
+				
+			</div>
+		</main>
 	</body>
 </html>
