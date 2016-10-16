@@ -1,0 +1,17 @@
+body { background: #EEEEEE;  }
+::selection { background: #99CCFF; color: #FAFAFA; }
+::-moz-selection { background: #99CCFF; color: #FAFAFA; }
+
+header { background: #3399FF;  }
+header h1 { color: #FAFAFA; }
+
+#bar { background: #DFDFDF; }
+#bar ul li:hover { background: #99CCFF; }
+
+#bar ul li ul { border: 1px solid #DFDFDF; background: #FAFAFA; border-top: none; }
+
+#lines .line .number { border-right: 1px solid #CCCCCC; color: #AAAAAA; }
+#code { border-right: 1px solid #CCCCCC; border-bottom: 1px solid #CCCCCC;  }
+
+#console { border: 1px solid #CCCCCC; }
+#console h1 { border-bottom: 1px solid #CCCCCC; }

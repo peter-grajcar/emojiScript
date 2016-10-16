@@ -1,17 +1,26 @@
-body { background: #EEEEEE; margin: 0 }
+body { margin: 0; font-size: 16px; }
 *:focus { outline: none; }
 
-header { z-index: 2000; background: #DFDFDF; }
-header ul { list-style-type: none; margin: 0; padding: 0}
-header ul li { z-index: 3000; display: inline-block; padding: 0.1em 0.5em; cursor: pointer; position: relative; }
-header ul li:hover { background: #99CCFF; }
+header { padding: 0.25em 0.5em; cursor: pointer; }
+header h1 { margin: 0; font-family: arial; }
+header h1 i { font-size: 0.5em;}
 
-header ul li ul { display: none; position: absolute; left: 0; border: 1px solid #DFDFDF; border-top: none; margin-top: 1px; background: #FAFAFA; white-space: nowrap; }
-header ul li ul li { display: block; }
+#bar { z-index: 2000; }
+#bar ul { list-style-type: none; margin: 0; padding: 0}
+#bar ul li { z-index: 3000; display: inline-block; padding: 0.1em 0.5em; cursor: pointer; position: relative; }
+#bar ul li:hover ul { display: block; }
 
+#bar ul li ul { display: none; position: absolute; left: 0; border-top: none; margin-top: 1px; white-space: nowrap; }
+#bar ul li ul li { display: block; }
 
-#code { z-index: 1000; font-family: courier new; position: relative; height: 11em; overflow: hidden; }
-#textarea { margin-left: 3em; line-height: 1em; font-family: courier new; font-size: 1em; position: absolute; left: 0; padding: 0; border: none; background: none; color: rgba(0,0,0,0); width: 100%; height: 11em; resize: none; border-bottom: 1px solid #CCCCCC; overflow-x: scroll; white-space: nowrap; border-left: 1px solid #CCCCCC;}
-#overlay { line-height: 1em; position: absolute; left: 0; width: 100%; white-space: nowrap; overflow: hidden; height: 10em; }
-#overlay .line { display: inline-block; width: 3em; border-right: 1px solid #CCCCCC; }
-#cursor { margin-left: 3em;  position: absolute; left: -0.3em;  }
+#code { z-index: 1000; display: inline-block; font-family: courier new; position: relative; height: 20em; width: 90%; overflow: hidden; padding-left: 5em;}
+#textarea { margin-left: 3em; line-height: 1em; font-family: courier new; font-size: 1em; position: absolute; left: 0; padding: 0; border: none; background: none; color: rgba(0,0,0,0); width: 100%; height: 100%; resize: none; overflow: scroll; white-space: nowrap; box-sizing: border-box; border-right: 3em solid rgba(0,0,0,0); }
+#lines { line-height: 1em; display: inline-block; position: absolute; top: 0; left: 0; overflow: hidden; width: 100%; height: 100%; box-sizing: border-box; border-bottom: 1em solid rgba(0,0,0,0); }
+#lines .line { }
+#lines .line .number { width: 2.5em; }
+#overlay { margin-left: 3em; display: inline-block; line-height: 1em; position: absolute; left: 0; width: 100%; white-space: nowrap; overflow: hidden; height: 100%; box-sizing: border-box; border-right: 4em solid rgba(0,0,0,0);}
+#overlay .tab { display: inline-block; width: 3em;}
+#cursor { z-index: 1500; margin-left: 3em; position: absolute; left: -0.2em; }
+
+#console { font-family: courier new; width: 50%; overflow: scroll; height: 10em; font-size: 0.75em; }
+#console h1 { margin: 0; padding: 0; font-size: 2em; }

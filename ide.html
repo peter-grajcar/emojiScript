@@ -4,37 +4,61 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width,initial-scale=1.0" />
 		<link rel="stylesheet" href="styles/ide.css"/>
+		<link rel="stylesheet" href="styles/lightTheme.css"/>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 		<script>
 			$(document).ready(function(){
-				$("li").mouseover(function() {
-						$(this).find("ul").css("display", "block");
-				}).mouseout(function() {
-						$(this).find("ul").css("display", "none");
-				});
 				function highlight(){
-					var code = $("#code #textarea").val()
+					var code = $("#code #textarea").val();
 					var cursor = $("#code #textarea").prop("selectionStart");
 					var before = code.substring(0,cursor);
-					var rows = (before.match(/[\n\r]/g) || []).length;
+					var rows = (before.match(/\n/g) || []).length;
 					var cols = cursor - before.lastIndexOf("\n");
-					console.log();
+					
+					var lines = "";
+					for(var i = 1; i <= (code.match(/\n/g) || []).length+1; i++){
+						lines += "<div class=\"line\"><div class=\"number\">" + i + "</div></div>";
+					}
+					$("#code #lines").html(lines);
 										
-					$("#code #overlay").html("<div class=\"line\">?</div>" + code.replace(/[\n\r]/g, "<br><div class=\"line\">?</div>"));
-					$("#code #cursor").css("top", rows + "em")
-										.css("left", (cols*0.6-0.8) + "em");
+					$("#code #overlay").html("<div class=\"line\">" + code.replace(/ /g,"&nbsp;").replace(/\n/g, "<br>").replace(/var/g, "<font color=\"#FF00DD\">var</font>") + "<br><br>");
+					$("#code #cursor").css("top", (rows - Math.floor(document.getElementById('overlay').scrollTop/16)) + "em")
+										.css("left", (cols*0.6-0.9 - (document.getElementById('overlay').scrollLeft/16)) + "em");
+					
 				}
 				$("#code #textarea").keypress(highlight)
 									.keydown(highlight)
 									.keyup(highlight)
+									.click(highlight)
 									.scroll(function(){
-										document.getElementById('overlay').scrollTop = document.getElementById('textarea').scrollTop
-									}).click(highlight);
+										highlight();
+										document.getElementById('overlay').scrollTop = document.getElementById('textarea').scrollTop;
+										document.getElementById('lines').scrollTop = document.getElementById('textarea').scrollTop;
+										document.getElementById('overlay').scrollLeft = document.getElementById('textarea').scrollLeft;
+										highlight();
+									})
+									.focus();
+				document.getElementById("textarea").onkeydown = function (e){
+					if(e.keyCode == 9){
+						e.preventDefault();
+						var start = this.selectionStart;
+						this.value = this.value.substring(0,start) + "        " + this.value.substring(this.selectionEnd);
+						this.selectionEnd = start+8;
+					}
+				}
+									
+				$("header .emoji").text(String.fromCharCode(55357, 56832+Math.floor(Math.random()*69)));
+				$("header").click(function(){
+								$("header .emoji").text(String.fromCharCode(55357, 56832+Math.floor(Math.random()*69)))
+							});
 			});
 		</script>
 	</head>
 	<body>
 		<header>
+			<h1><span class="emoji"></span> EmojiScript IDE <i>v 0.1.0</i></h1>
+		</header>
+		<div id="bar">
 			<ul>
 				<li>
 					File
@@ -57,14 +81,24 @@
 						<li>Variable scope</li>
 					</ul>
 				</li>
+				<li>
+					Run
+				</li>
 			</ul>
-		</header>
+		</div>
 		<main>
 			<div id="code">
+				<div id="lines">
+					<div class="line"><div class="number">1</div></div>
+				</div>
 				<div id="overlay"></div>
 				<span id="cursor">|</span>
 				<textarea id="textarea" spellcheck="false"></textarea>
 				
+			</div>
+			<div id="console">
+			<h1>Console</h1>
+			&gt; Hello World
 			</div>
 		</main>
 	</body>
