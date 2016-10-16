@@ -1,5 +1,6 @@
 var Lexer = function (code) {
 	this.code = code;
+	this.output = new Output();
 	this.pos = 0;
 	this.currentChar = this.code.charAt(this.pos);
 	
@@ -77,7 +78,7 @@ var Lexer = function (code) {
 	}
 	
 	this.error = function (msg) {
-		document.getElementById("error").innerHTML += ("Parse Error: " + msg + " near '" + this.code.substring(this.pos-2,this.pos+10) + "'<br>");
+		this.output.error("Parse Error: " + msg + " near '" + this.code.substring(this.pos-2,this.pos+10) + "'<br>");
 	}
 	
 	//returns next character

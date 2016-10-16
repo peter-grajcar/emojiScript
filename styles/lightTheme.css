@@ -13,5 +13,5 @@ header h1 { color: #FAFAFA; }
 #lines .line .number { border-right: 1px solid #CCCCCC; color: #AAAAAA; }
 #code { border-right: 1px solid #CCCCCC; border-bottom: 1px solid #CCCCCC;  }
 
-#console { border: 1px solid #CCCCCC; }
-#console h1 { border-bottom: 1px solid #CCCCCC; }
+#console h1 { background: #DFDFDF; border: 1px solid #CCCCCC; }
+#io { border: 1px solid #CCCCCC; }

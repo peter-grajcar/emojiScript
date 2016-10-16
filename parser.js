@@ -1,7 +1,7 @@
 var Parser = function (lexer) {
 	this.lexer = lexer;
 	this.input = new Input();
-	this.output = new Output();
+	this.output = lexer.output;
 	this.currentToken = this.lexer.nextToken();
 	this.GLOBAL_SCOPE = {
 		

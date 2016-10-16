@@ -80,9 +80,9 @@
 				document.getElementById("error").innerHTML = "";
 				
 				var lexer = new Lexer( document.getElementById("code").value );
+				lexer.output = output;
 				var parser = new Parser(lexer);
 				var interpreter = new Interpreter(parser);
-				parser.output = output;
 				interpreter.parse();
 			}
 			document.getElementById("code").onkeydown = function (e){
